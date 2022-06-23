@@ -7,11 +7,6 @@ import { UsersService } from './users.service';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Query((returns) => [User])
-  users(): Promise<User[]> {
-    return this.usersService.findAll();
-  }
-
   @Query((returns) => User)
   signIn(@Args('id') id: string, @Args('password') password: string) {
     return this.usersService.signIn(id, password);
