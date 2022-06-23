@@ -16,4 +16,7 @@ export class User {
   @OneToMany(() => Todo, (todo) => todo.author)
   @Field((type) => [Todo])
   todos?: Todo[];
+
+  @Field()
+  token?: string;
 }

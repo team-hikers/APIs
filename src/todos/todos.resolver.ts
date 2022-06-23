@@ -7,7 +7,7 @@ import { CreateTodoInput } from './input/create-todo.input-type';
 export class TodosResolver {
   constructor(private readonly todosService: TodosService) {}
 
-  @Query()
+  @Query((type) => [Todo])
   findAllTodos() {
     let author;
     return this.todosService.findAllTodos(author);

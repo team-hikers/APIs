@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { SignUpInput } from './dto/signup.input-type';
 import { User } from './entity/user.entity';
 import * as jwt from 'jsonwebtoken';
+import * as md5 from 'md5';
 
 @Injectable()
 export class UsersService {
@@ -17,8 +18,9 @@ export class UsersService {
   // 로그인
   async signIn(id: string, password: string) {
     let user = await this.userRepository.findOneOrFail({
-      where: { id, password },
+      where: { id },
     });
+    if (user.password !== md5(password)) return;
     const secretKey = this.configService.get(envEnum.secretKey);
     const jwtDuration = this.configService.get(envEnum.jwtDuration);
     const token = jwt.sign({ id }, secretKey, { expiresIn: jwtDuration });
@@ -34,7 +36,10 @@ export class UsersService {
         .where('id = :id', { id: signUpInput.id })
         .getCount())
     ) {
-      const newUser = this.userRepository.create(signUpInput);
+      const newUser = this.userRepository.create({
+        ...signUpInput,
+        password: md5(signUpInput.password),
+      });
       return await this.userRepository.save(newUser);
     }
     return;
