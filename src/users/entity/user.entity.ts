@@ -1,20 +1,17 @@
 import { Todo } from './../../todos/entity/todo.entity';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  @Field((type) => Int)
-  id: number;
+  @PrimaryColumn()
+  @Field()
+  id!: string;
 
   @Column()
   @Field()
-  nickname: string;
-
-  @Field()
-  password: string;
+  password!: string;
 
   @OneToMany(() => Todo, (todo) => todo.author)
   @Field((type) => [Todo])

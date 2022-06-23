@@ -11,6 +11,7 @@ import { TodosModule } from './todos/todos.module';
     ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      playground: process.env.env === 'dev',
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     dbModule,
