@@ -14,7 +14,7 @@ import {
 export class Todo {
   @Field((type) => Int)
   @PrimaryGeneratedColumn()
-  id!: number;
+  id?: number;
 
   @Field()
   @Column()
@@ -26,6 +26,6 @@ export class Todo {
 
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn()
-  @Field()
+  @Field((type) => User)
   author!: string;
 }

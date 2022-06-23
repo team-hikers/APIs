@@ -17,5 +17,6 @@ export class User {
   password: string;
 
   @OneToMany(() => Todo, (todo) => todo.author)
+  @Field((type) => [Todo])
   todos?: Todo[];
 }
