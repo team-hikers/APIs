@@ -27,6 +27,8 @@ type Query {
 type Mutation {
   signUp(signUpInput: SignUpInput!): User!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
+  deleteTodo(deleteTodoInput: DeleteTodoInput!): Todo!
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
   signIn: SignInResponse!
 }
 
@@ -36,6 +38,16 @@ input SignUpInput {
 }
 
 input CreateTodoInput {
+  content: String!
+  isComplete: Int!
+}
+
+input DeleteTodoInput {
+  id: Int!
+}
+
+input UpdateTodoInput {
+  id: Int!
   content: String!
   isComplete: Int!
 }

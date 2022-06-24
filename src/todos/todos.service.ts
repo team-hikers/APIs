@@ -1,8 +1,10 @@
+import { DeleteTodoInput } from './dto/delete-todo.input-type';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { Todo } from './entity/todo.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateTodoInput } from './input/create-todo.input-type';
+import { CreateTodoInput } from './dto/create-todo.input-type';
+import { UpdateTodoInput } from './dto/update-todo.input-type';
 
 @Injectable()
 export class TodosService {
@@ -11,8 +13,8 @@ export class TodosService {
     private readonly todoRepository: Repository<Todo>,
   ) {}
 
-  async findAllTodos(author: string): Promise<Todo[]> {
-    return await this.todoRepository.find({ where: { author } });
+  async findAllTodos(id: string): Promise<Todo[]> {
+    return await this.todoRepository.find({ where: { author: id } });
   }
 
   async createTodo(createTodoInput: CreateTodoInput): Promise<Todo> {
@@ -20,11 +22,29 @@ export class TodosService {
     return await this.todoRepository.save(todo);
   }
 
-  async updateTodo() {
-    return;
+  async updateTodo(id: string, updateTodoInput: UpdateTodoInput) {
+    const todo = await this.todoRepository.findOneByOrFail({
+      id: updateTodoInput.id,
+      author: id,
+    });
+    const newTodo = await this.todoRepository.save({
+      ...todo,
+      ...updateTodoInput,
+    });
+    return newTodo;
   }
 
-  async deleteTodo() {
-    return;
+  async deleteTodo(id: string, deleteTodoInput: DeleteTodoInput) {
+    const todo = await this.todoRepository.findOneByOrFail({
+      id: deleteTodoInput.id,
+      author: id,
+    });
+    await this.todoRepository
+      .createQueryBuilder()
+      .where('author = :author', { author: id })
+      .andWhere('id = :id', { id: deleteTodoInput.id })
+      .delete()
+      .execute();
+    return todo;
   }
 }
