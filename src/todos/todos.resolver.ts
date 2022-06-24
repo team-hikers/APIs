@@ -2,7 +2,7 @@ import { JwtAuthGuard } from './../auth/guard/jwt.guard';
 import { Todo } from './entity/todo.entity';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TodosService } from './todos.service';
-import { CreateTodoInput } from './input/create-todo.input-type';
+import { CreateTodoInput } from './dto/create-todo.input-type';
 import { UseGuards } from '@nestjs/common';
 import { DeleteTodoInput } from './dto/delete-todo.input-type';
 import { UpdateTodoInput } from './dto/update-todo.input-type';
