@@ -2,12 +2,52 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type Todo {
   id: Int!
-  nickname: String!
+  content: String!
+  isComplete: Int!
+  author: User!
+}
+
+type User {
+  id: String!
   password: String!
+  todos: [Todo!]!
+}
+
+type SignInResponse {
+  token: String!
+  user: User!
 }
 
 type Query {
-  users: [User!]!
+  findAllTodos: [Todo!]!
+}
+
+type Mutation {
+  signUp(signUpInput: SignUpInput!): User!
+  createTodo(createTodoInput: CreateTodoInput!): Todo!
+  deleteTodo(deleteTodoInput: DeleteTodoInput!): Todo!
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+  signIn: SignInResponse!
+}
+
+input SignUpInput {
+  id: String!
+  password: String!
+}
+
+input CreateTodoInput {
+  content: String!
+  isComplete: Int!
+}
+
+input DeleteTodoInput {
+  id: Int!
+}
+
+input UpdateTodoInput {
+  id: Int!
+  content: String!
+  isComplete: Int!
 }
