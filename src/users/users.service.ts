@@ -12,7 +12,6 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly configService: ConfigService,
   ) {}
   // 회원가입
   async signUp(signUpInput: SignUpInput): Promise<User | undefined> {

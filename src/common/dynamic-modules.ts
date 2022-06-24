@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
-import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
-import { envEnum } from './common/env.enum';
+import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { envEnum } from './env.enum';
 
 export const dbModule = TypeOrmModule.forRootAsync({
   inject: [ConfigService],
@@ -24,5 +25,13 @@ export const dbModule = TypeOrmModule.forRootAsync({
         database: configService.get(envEnum.slaveDatabase),
       })),
     },
+  }),
+});
+
+export const myJwtModule = JwtModule.registerAsync({
+  inject: [ConfigService],
+  useFactory: async (configService: ConfigService) => ({
+    signOptions: { expiresIn: configService.get(envEnum.jwtDuration) },
+    secret: configService.get(envEnum.secretKey),
   }),
 });

@@ -7,21 +7,18 @@ import { SignInResponse } from './dto/sign-in-response.object-type';
 import { SignInInput } from './dto/sign-in.input-type';
 import * as md5 from 'md5';
 import * as jwt from 'jsonwebtoken';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly configService: ConfigService,
+    private readonly jwtService: JwtService,
   ) {}
   // 로그인
   async signIn(user: User): Promise<SignInResponse> {
     const { id } = user;
-    const secretKey = this.configService.get(envEnum.secretKey);
-    const jwtDuration = this.configService.get(envEnum.jwtDuration);
-    const token = jwt.sign({ id }, secretKey, {
-      expiresIn: jwtDuration,
-    });
+    const token = this.jwtService.sign({ id });
 
     const response = { user: { id }, token };
     return response;
