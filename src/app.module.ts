@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { dbModule } from './db';
 import { TodosModule } from './todos/todos.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -17,6 +18,7 @@ import { TodosModule } from './todos/todos.module';
     dbModule,
     UsersModule,
     TodosModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
