@@ -13,17 +13,21 @@ type User {
   id: String!
   password: String!
   todos: [Todo!]!
+}
+
+type SignInResponse {
   token: String!
+  user: User!
 }
 
 type Query {
-  signIn(id: String!, password: String!): User!
   findAllTodos: [Todo!]!
 }
 
 type Mutation {
   signUp(signUpInput: SignUpInput!): User!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
+  signIn: SignInResponse!
 }
 
 input SignUpInput {

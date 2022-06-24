@@ -7,11 +7,6 @@ import { UsersService } from './users.service';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Query((returns) => User)
-  signIn(@Args('id') id: string, @Args('password') password: string) {
-    return this.usersService.signIn(id, password);
-  }
-
   @Mutation((returns) => User)
   async signUp(@Args('signUpInput') signUpInput: SignUpInput): Promise<User> {
     return this.usersService.signUp(signUpInput);
