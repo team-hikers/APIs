@@ -13,19 +13,25 @@ export class TodosService {
     private readonly todoRepository: Repository<Todo>,
   ) {}
 
-  async findAllTodos(id: string): Promise<Todo[]> {
-    return await this.todoRepository.find({ where: { author: id } });
+  async findAllTodos(username: string): Promise<Todo[]> {
+    return await this.todoRepository.find({ where: { author: username } });
   }
 
-  async createTodo(createTodoInput: CreateTodoInput): Promise<Todo> {
-    const todo = this.todoRepository.create(createTodoInput);
+  async createTodo(
+    username: string,
+    createTodoInput: CreateTodoInput,
+  ): Promise<Todo> {
+    const todo = this.todoRepository.create({
+      ...createTodoInput,
+      author: username,
+    });
     return await this.todoRepository.save(todo);
   }
 
-  async updateTodo(id: string, updateTodoInput: UpdateTodoInput) {
+  async updateTodo(username: string, updateTodoInput: UpdateTodoInput) {
     const todo = await this.todoRepository.findOneByOrFail({
       id: updateTodoInput.id,
-      author: id,
+      author: username,
     });
     const newTodo = await this.todoRepository.save({
       ...todo,
@@ -34,14 +40,14 @@ export class TodosService {
     return newTodo;
   }
 
-  async deleteTodo(id: string, deleteTodoInput: DeleteTodoInput) {
+  async deleteTodo(username: string, deleteTodoInput: DeleteTodoInput) {
     const todo = await this.todoRepository.findOneByOrFail({
       id: deleteTodoInput.id,
-      author: id,
+      author: username,
     });
     await this.todoRepository
       .createQueryBuilder()
-      .where('author = :author', { author: id })
+      .where('author = :author', { author: username })
       .andWhere('id = :id', { id: deleteTodoInput.id })
       .delete()
       .execute();

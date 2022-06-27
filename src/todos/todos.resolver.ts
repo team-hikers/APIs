@@ -14,13 +14,17 @@ export class TodosResolver {
 
   @Query((type) => [Todo])
   findAllTodos(@Context() context) {
-    const { id } = context.user;
-    return this.todosService.findAllTodos(id as string);
+    const { username } = context.user;
+    return this.todosService.findAllTodos(username as string);
   }
 
   @Mutation((type) => Todo)
-  createTodo(@Args('createTodoInput') createTodoInput: CreateTodoInput) {
-    return this.todosService.createTodo(createTodoInput);
+  createTodo(
+    @Context() context,
+    @Args('createTodoInput') createTodoInput: CreateTodoInput,
+  ) {
+    const { username } = context.user;
+    return this.todosService.createTodo(username, createTodoInput);
   }
 
   @Mutation((type) => Todo)
@@ -28,8 +32,8 @@ export class TodosResolver {
     @Context() context,
     @Args('deleteTodoInput') deleteTodoInput: DeleteTodoInput,
   ) {
-    const { id } = context.user;
-    return this.todosService.deleteTodo(id, deleteTodoInput);
+    const { username } = context.user;
+    return this.todosService.deleteTodo(username, deleteTodoInput);
   }
 
   @Mutation((type) => Todo)
@@ -37,7 +41,7 @@ export class TodosResolver {
     @Context() context,
     @Args('updateTodoInput') updateTodoInput: UpdateTodoInput,
   ) {
-    const { id } = context.user;
-    return this.todosService.updateTodo(id, updateTodoInput);
+    const { username } = context.user;
+    return this.todosService.updateTodo(username, updateTodoInput);
   }
 }

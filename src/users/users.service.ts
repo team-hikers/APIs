@@ -18,7 +18,7 @@ export class UsersService {
     if (
       !(await this.userRepository
         .createQueryBuilder()
-        .where('id = :id', { id: signUpInput.id })
+        .where('username = :username', { username: signUpInput.username })
         .getCount())
     ) {
       const newUser = this.userRepository.create({
@@ -30,7 +30,7 @@ export class UsersService {
     return;
   }
 
-  async findOne(id: string): Promise<User | undefined> {
-    return await this.userRepository.findOneBy({ id });
+  async findOne(username: string): Promise<User | undefined> {
+    return await this.userRepository.findOneBy({ username });
   }
 }

@@ -7,20 +7,6 @@ import {
   Min,
   Max,
 } from 'class-validator';
-@InputType()
-export class SignUpInput {
-  @IsString()
-  @MinLength(10)
-  @MaxLength(24)
-  @Field()
-  id: string;
-
-  @Field()
-  @MinLength(6)
-  @MaxLength(20)
-  @IsString()
-  password: string;
-}
 
 @InputType()
 export class CreateTodoInput {
