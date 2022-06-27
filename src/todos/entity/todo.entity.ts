@@ -24,6 +24,10 @@ export class Todo {
   @Column({ type: 'tinyint', width: 1, default: () => 0 })
   isComplete?: number;
 
+  @Field((type) => Int)
+  @Column()
+  sequence: number;
+
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn()
   @Field((type) => User)

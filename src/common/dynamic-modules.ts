@@ -8,6 +8,7 @@ export const dbModule = TypeOrmModule.forRootAsync({
   useFactory: async (configService: ConfigService) => ({
     type: 'mysql',
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    synchronize: configService.get(envEnum.env) === 'dev',
     replication: {
       master: {
         host: configService.get(envEnum.host) || 'localhost',
@@ -15,13 +16,16 @@ export const dbModule = TypeOrmModule.forRootAsync({
         username: configService.get(envEnum.userName) || 'root',
         password: configService.get(envEnum.password) || '',
         database: configService.get(envEnum.database) || 'test',
-        synchronize: configService.get(envEnum.env) === 'dev',
       },
       slaves: Array(+configService.get(envEnum.slaveNum)).map((_, index) => ({
         host: configService.get(envEnum.slaveHost),
         port: configService.get(envEnum.slavePort),
-        username: configService.get(envEnum.slaveNames.split(',')[index]),
-        password: configService.get(envEnum.slavePasswords.split(',')[index]),
+        username: configService
+          .get(envEnum.slaveNames)
+          .concat(index.toString()),
+        password: configService
+          .get(envEnum.slavePasswords)
+          .concat(index.toString()),
         database: configService.get(envEnum.slaveDatabase),
       })),
     },

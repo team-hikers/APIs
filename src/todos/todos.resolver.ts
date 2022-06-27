@@ -6,6 +6,7 @@ import { CreateTodoInput } from './dto/create-todo.input-type';
 import { UseGuards } from '@nestjs/common';
 import { DeleteTodoInput } from './dto/delete-todo.input-type';
 import { UpdateTodoInput } from './dto/update-todo.input-type';
+import { UpdateSequenceInput } from './dto/update-sequence.input-type';
 
 @Resolver()
 @UseGuards(JwtAuthGuard)
@@ -43,5 +44,14 @@ export class TodosResolver {
   ) {
     const { username } = context.user;
     return this.todosService.updateTodo(username, updateTodoInput);
+  }
+
+  @Mutation((type) => [Todo])
+  updateSequence(
+    @Context() context,
+    @Args('updateSequenceInput') updateSequenceInput: UpdateSequenceInput,
+  ) {
+    const { username } = context.user;
+    return this.todosService.updateSequence(username, updateSequenceInput);
   }
 }
