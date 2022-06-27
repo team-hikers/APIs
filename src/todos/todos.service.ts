@@ -23,9 +23,16 @@ export class TodosService {
     username: string,
     createTodoInput: CreateTodoInput,
   ): Promise<Todo> {
+    const lastTodo = await this.todoRepository
+      .createQueryBuilder()
+      .where('author = :username', { username })
+      .orderBy('sequence', 'DESC')
+      .getOne();
+    const sequence = lastTodo ? lastTodo.sequence + 1 : 1;
     const todo = this.todoRepository.create({
       ...createTodoInput,
       author: username,
+      sequence,
     });
     return await this.todoRepository.save(todo);
   }

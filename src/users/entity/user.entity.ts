@@ -9,11 +9,11 @@ export class User {
   @Field((type) => Int)
   id: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: false })
   @Field()
   username!: string;
 
-  @Column()
+  @Column({ nullable: false })
   @Field()
   password!: string;
 
