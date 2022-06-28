@@ -9,15 +9,15 @@ export class User {
   @Field((type) => Int)
   id: number;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ name: 'username', type: 'varchar', unique: true, nullable: false })
   @Field()
-  username!: string;
+  username: string;
 
-  @Column({ nullable: false })
+  @Column({ name: 'password', nullable: false })
   @Field()
-  password!: string;
+  password: string;
 
-  @OneToMany(() => Todo, (todo) => todo.author)
+  @OneToMany(() => Todo, (todo) => todo.user)
   @Field((type) => [Todo])
-  todos?: Todo[];
+  todos: Todo[];
 }
