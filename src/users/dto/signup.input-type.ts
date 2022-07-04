@@ -6,7 +6,7 @@ export class SignUpInput {
   @MinLength(10)
   @MaxLength(24)
   @Field()
-  id: string;
+  username: string;
 
   @Field()
   @MinLength(6)

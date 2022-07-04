@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { envEnum } from 'src/common/env.enum';
 import { Repository } from 'typeorm';
 import { SignUpInput } from './dto/signup.input-type';
 import { User } from './entity/user.entity';
@@ -18,7 +16,7 @@ export class UsersService {
     if (
       !(await this.userRepository
         .createQueryBuilder()
-        .where('id = :id', { id: signUpInput.id })
+        .where('username = :username', { username: signUpInput.username })
         .getCount())
     ) {
       const newUser = this.userRepository.create({
@@ -30,7 +28,7 @@ export class UsersService {
     return;
   }
 
-  async findOne(id: string): Promise<User | undefined> {
-    return await this.userRepository.findOneBy({ id });
+  async findOne(username: string): Promise<User | undefined> {
+    return await this.userRepository.findOneBy({ username });
   }
 }

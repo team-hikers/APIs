@@ -6,11 +6,14 @@ type Todo {
   id: Int!
   content: String!
   isComplete: Int!
-  author: User!
+  sequence: Int!
+  author: String!
+  user: User!
 }
 
 type User {
-  id: String!
+  id: Int!
+  username: String!
   password: String!
   todos: [Todo!]!
 }
@@ -29,11 +32,12 @@ type Mutation {
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   deleteTodo(deleteTodoInput: DeleteTodoInput!): Todo!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+  updateSequence(updateSequenceInput: UpdateSequenceInput!): [Todo!]!
   signIn: SignInResponse!
 }
 
 input SignUpInput {
-  id: String!
+  username: String!
   password: String!
 }
 
@@ -50,4 +54,9 @@ input UpdateTodoInput {
   id: Int!
   content: String!
   isComplete: Int!
+}
+
+input UpdateSequenceInput {
+  from: Int!
+  to: Int!
 }
