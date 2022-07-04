@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { envEnum } from 'src/common/env.enum';
 import { Repository } from 'typeorm';
 import { SignUpInput } from './dto/signup.input-type';
 import { User } from './entity/user.entity';
