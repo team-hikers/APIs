@@ -1,5 +1,5 @@
 # compiled output
-/dist
+/src
 /node_modules
 
 # Logs
@@ -37,3 +37,4 @@ lerna-debug.log*
 
 #env
 .env
+docker-compose.yml
