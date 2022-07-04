@@ -27,7 +27,7 @@ exports.dbModule = typeorm_1.TypeOrmModule.forRootAsync({
                 host: configService
                     .get(env_enum_1.envEnum.slaveHost)
                     .concat((index + 2).toString()),
-                port: configService.get(env_enum_1.envEnum.slavePort),
+                port: +configService.get(env_enum_1.envEnum.slavePort),
                 username: configService
                     .get(env_enum_1.envEnum.slaveNames)
                     .concat(index.toString()),
