@@ -37,7 +37,6 @@ export const dbModule = TypeOrmModule.forRootAsync({
     },
   }),
 });
-// master slave 설정하면서 각 프로퍼티가 무슨 의미를 담는가?
 
 export const myJwtModule = JwtModule.registerAsync({
   inject: [ConfigService],
